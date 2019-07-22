@@ -1,0 +1,27 @@
+logging:
+  logdir: ${LOG_DIR:/logs/person}
+  console-level: debug
+  file-level: trace
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS}[%5p] --- [%-24t] [%-50C{50}][%-6L]: %m%n"
+  level:
+    root: info
+    person.pluto: ${LOG_LEVEL:trace}
+spring:
+  application:
+    name: natcross-boot-client
+  devtools:
+    livereload:
+      enabled: false
+    restart:
+      enabled: ${RESTART_ENABLED:true}
+
+natcross:
+  client:
+    constants:
+      HTTP_SERVER: http://129.28.193.163:10080
+      STREAM_CACHE_SIZE: 4096
+      CLIENT_SERVER_IP: ${NATCROSS_CLIENT_SERVER_IP:129.28.193.163}
+      CLIENT_SERVER_PORT: 10010
+      CLIENT_HEART_INTERVAL: 10000
+      TRY_RECLIENT_COUNT: 10

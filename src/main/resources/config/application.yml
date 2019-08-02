@@ -1,5 +1,5 @@
 logging:
-  logdir: ${LOG_DIR:/logs/person}
+  logdir: ${LOG_DIR:/logs}
   console-level: debug
   file-level: trace
   pattern:

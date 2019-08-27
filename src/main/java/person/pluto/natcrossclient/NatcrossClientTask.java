@@ -25,6 +25,7 @@ public class NatcrossClientTask {
                 null);
         if (StringUtils.isBlank(doPost)) {
             log.error("向服务器获取监听状态异常");
+            return;
         }
         log.debug("向服务器获取监听状态，{}", doPost);
 

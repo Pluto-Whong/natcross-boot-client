@@ -1,11 +1,11 @@
 package person.pluto.natcrossclient;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 
 import lombok.extern.slf4j.Slf4j;
 import person.pluto.natcross.clientitem.ClientControlThread;
@@ -22,7 +22,7 @@ import person.pluto.natcross.common.NatcrossConstants;
 @Slf4j
 public class NatcrossClientControl {
 
-    private static Map<Integer, ClientControlThread> serverListenMap = new TreeMap<>();
+    private static Map<Integer, ClientControlThread> serverListenMap = new HashMap<>();
 
     /**
      * 加入新的客户端线程

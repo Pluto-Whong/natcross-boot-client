@@ -1,6 +1,5 @@
 package person.pluto.natcrossclient;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -8,8 +7,8 @@ import java.util.Map;
 import java.util.Set;
 
 import lombok.extern.slf4j.Slf4j;
-import person.pluto.natcross.clientitem.ClientControlThread;
-import person.pluto.natcross.common.NatcrossConstants;
+import person.pluto.natcross2.clientside.ClientControlThread;
+import person.pluto.natcross2.clientside.config.IClientConfig;
 
 /**
  * <p>
@@ -119,34 +118,32 @@ public class NatcrossClientControl {
      * @param destPort
      * @return
      */
-    public static ClientControlThread createNewClientThread(Integer port, String destIp, Integer destPort) {
+    public static ClientControlThread createNewClientThread(IClientConfig<?, ?> config) {
 
         // 如果之前存在，并且还活着，则使用以前的，遵从以前连接不清理的原则，只更新dest便可很友好完成变更目标的目的
-        ClientControlThread clientControlThread = NatcrossClientControl.get(port);
+        ClientControlThread clientControlThread = NatcrossClientControl.get(config.getListenServerPort());
         if (clientControlThread != null && clientControlThread.isAlive()) {
-            clientControlThread.setDestIpPort(destIp, destPort);
+            clientControlThread.setDestIpPort(config.getDestIp(), config.getDestPort());
             return clientControlThread;
         }
 
         // 不管是不存在，还是不在活跃状态，都符合去除设定，即时下面创建失败，也应该除去这些无用的线程
-        NatcrossClientControl.remove(port);
+        NatcrossClientControl.remove(config.getListenServerPort());
 
+        clientControlThread = new ClientControlThread(config);
+
+        boolean createControl = false;
         try {
-            clientControlThread = new ClientControlThread(NatcrossConstants.CLIENT_SERVER_IP,
-                    NatcrossConstants.CLIENT_SERVER_PORT, port, destIp, destPort);
-        } catch (IOException e) {
-            log.warn("create client thread [{} <-> {}:{}] faild", port, destIp, destPort);
-            return null;
-        }
-        try {
-            boolean createControl = clientControlThread.createControl();
+            createControl = clientControlThread.createControl();
+        } catch (Exception e) {
+            createControl = false;
+        } finally {
             if (!createControl) {
+                log.warn("create client thread [{} <-> {}:{}] faild", config.getListenServerPort(), config.getDestIp(),
+                        config.getDestPort());
                 clientControlThread.cancell();
                 return null;
             }
-        } catch (IOException e) {
-            clientControlThread.cancell();
-            return null;
         }
         NatcrossClientControl.add(clientControlThread);
         return clientControlThread;

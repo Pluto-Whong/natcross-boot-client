@@ -136,6 +136,7 @@ public class NatcrossClientControl {
         try {
             createControl = clientControlThread.createControl();
         } catch (Exception e) {
+            log.error("创建通讯隧道异常", e);
             createControl = false;
         } finally {
             if (!createControl) {

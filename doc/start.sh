@@ -1,8 +1,10 @@
 #!/bin/bash
 
+BASE_DIR=`dirname $(readlink -f $0)`
+
 ## 日志配置，logback日志引擎
 export LOG_CONFIG_PATH=classpath:config/logback-spring.xml
-export LOG_DIR=./logs
+export LOG_DIR=${BASE_DIR}/logs
 export LOG_LEVEL=info
 
 ## 服务端放置的IP地址
@@ -21,7 +23,7 @@ export NATCROSS_AES_KEY='0PMudFSqJ9WsQrTC60sva9sJAV4PF5iOBjKZW17NeF4='
 export NATCROSS_TOKEN_KEY=tokenKey
 
 JAVA_OPTS="-XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=20"
-nohup java ${JAVA_OPTS} -jar ./natcross-boot.jar 2>&1 > /dev/null &
+nohup java ${JAVA_OPTS} -jar ./natcross-boot-client.jar 2>&1 > /dev/null &
 
 APPID=$!
 echo $APPID > ./app.pid

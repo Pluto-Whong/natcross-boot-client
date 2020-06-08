@@ -12,6 +12,7 @@ mvn clean compile package -Dmaven.test.skip=true -f ./source_code/
 
 if [ ! -f "./stop.sh" ] || [ ! -f "./start.sh" ]; then
     cp ./source_code/doc/* ./
+    chmod +x ./*.sh
 fi
 
 . ./stop.sh

@@ -10,7 +10,11 @@ git clone https://github.com/Pluto-Whong/natcross-boot-client.git ./source_code
 
 mvn clean compile package -Dmaven.test.skip=true -f ./source_code/
 
+if [ ! -f "./stop.sh" ] || [ ! -f "./start.sh" ]; then
+    cp ./source_code/doc/* ./
+fi
+
 . ./stop.sh
 
-rm -rf natcross-booa-client.jar
+rm -rf natcross-boot-client.jar
 cp ./source_code/target/natcross-boot-client.jar ./

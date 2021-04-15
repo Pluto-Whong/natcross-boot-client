@@ -1,6 +1,8 @@
 package person.pluto;
 
 import lombok.extern.slf4j.Slf4j;
+import person.pluto.natcross2.executor.NatcrossExecutor;
+import person.pluto.natcross2.nio.NioHallows;
 import person.pluto.natcrossclient.NatcrossClientControl;
 
 import org.springframework.beans.factory.DisposableBean;
@@ -22,6 +24,8 @@ public class DestroyMainDisposable implements DisposableBean {
     public void destroy() {
         log.debug("DestroyMainDisposable destroy");
         NatcrossClientControl.closeAll();
+        NatcrossExecutor.shutdown();
+        NioHallows.INSTANCE.cancel();
     }
 
 }

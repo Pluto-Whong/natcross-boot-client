@@ -21,7 +21,7 @@ import person.pluto.natcross2.clientside.config.IClientConfig;
 @Slf4j
 public class NatcrossClientControl {
 
-	private static Map<Integer, ClientControlThread> serverListenMap = new HashMap<>();
+	private static final Map<Integer, ClientControlThread> serverListenMap = new HashMap<>();
 
 	/**
 	 * 加入新的客户端线程
@@ -56,13 +56,12 @@ public class NatcrossClientControl {
 	 * @return
 	 */
 	public static boolean remove(Integer listenPort) {
-		ClientControlThread clientControlThread = serverListenMap.get(listenPort);
+		ClientControlThread clientControlThread = serverListenMap.remove(listenPort);
 		if (clientControlThread == null) {
 			return true;
 		}
 
 		clientControlThread.cancell();
-		serverListenMap.remove(listenPort);
 
 		return true;
 	}

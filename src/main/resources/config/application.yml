@@ -18,9 +18,9 @@ spring:
       enabled: ${RESTART_ENABLED:true}
 
 natcross:
-  httpServer: ${NATCROSS_HTTP_SERVER:http://127.0.0.1:10080}
+  httpServer: ${NATCROSS_HTTP_SERVER:http://127.0.0.1:10020}
   httpProjectSign: ${NATCROSS_HTTP_SIGN_KEY:serverSignKey}
   clientServerIp: ${NATCROSS_CLIENT_SERVER_IP:127.0.0.1}
   clientServerPort: ${NATCROSS_CLIENT_SERVER_PORT:10010}
-  aeskey: ${NATCROSS_AES_KEY:0PMudFSqJ9WsQrTC60sva9sJAV4PF5iOBjKZW17NeF4=}
+  aeskey: ${NATCROSS_AES_KEY:1qV/BYx14agUrPFyw4ow+Q==}
   tokenKey: ${NATCROSS_TOKEN_KEY:tokenKey}
